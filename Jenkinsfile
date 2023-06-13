@@ -54,5 +54,12 @@ pipeline {
                 archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
             }
         }
+
+        //Paso para guardar el reporte de covertura de jacoco en Jenkins
+        stage('Record Jacoco Coverage') {
+            steps {
+                recordCoverage(tools: [[pattern: '**/jacoco.xml']])
+            }
+        }
     }
 }
