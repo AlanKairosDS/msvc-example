@@ -1,8 +1,11 @@
 package com.spring.common.tools.config;
 
 import com.spring.common.tools.entity.RestResponse;
+import org.apache.http.MethodNotSupportedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -18,27 +21,28 @@ public class ControllerExceptionHandler {
             HttpStatus.BAD_REQUEST);
   }
 
-  @ExceptionHandler(value = {NumberFormatException.class})
-  public ResponseEntity<RestResponse<Object>> numberFormatException (NumberFormatException e, WebRequest request) {
-    return new ResponseEntity<>(this.armarRespuesta(HttpStatus.BAD_REQUEST.value(), e.getMessage()),
-            HttpStatus.BAD_REQUEST);
-  }
-
   @ExceptionHandler(value = {MethodArgumentNotValidException.class})
-  public ResponseEntity<RestResponse<Object>> badRequestException (MethodArgumentNotValidException e,
+  public ResponseEntity<RestResponse<Object>> argumentNotValidException (MethodArgumentNotValidException e,
           WebRequest request) {
     return new ResponseEntity<>(this.armarRespuesta(HttpStatus.BAD_REQUEST.value(), e.getMessage()),
             HttpStatus.BAD_REQUEST);
   }
 
-  @ExceptionHandler(value = {MethodNotAllowedException.class})
-  public ResponseEntity<RestResponse<Object>> methodNotAllowedException (MethodNotAllowedException e,
+  @ExceptionHandler(value = {HttpMessageNotReadableException.class})
+  public ResponseEntity<RestResponse<Object>> notReadableException (HttpMessageNotReadableException e,
+          WebRequest request) {
+    return new ResponseEntity<>(this.armarRespuesta(HttpStatus.BAD_REQUEST.value(), e.getMessage()),
+            HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(value = {HttpRequestMethodNotSupportedException.class})
+  public ResponseEntity<RestResponse<Object>> methodNotSupportedException (HttpRequestMethodNotSupportedException e,
           WebRequest request) {
     return new ResponseEntity<>(this.armarRespuesta(HttpStatus.METHOD_NOT_ALLOWED.value(), e.getMessage()),
             HttpStatus.METHOD_NOT_ALLOWED);
   }
 
-  @ExceptionHandler(value = {MyOwnException.class})
+  @ExceptionHandler(value = {Exception.class})
   public ResponseEntity<RestResponse<Object>> myOwnException (Exception e, WebRequest request) {
     return new ResponseEntity<>(this.armarRespuesta(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()),
             HttpStatus.INTERNAL_SERVER_ERROR);

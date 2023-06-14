@@ -1,0 +1,9 @@
+server:
+  port: 8002
+  servlet:
+    context-path: /msvc-test
+
+spring:
+  application:
+    name: msvc-test
+
