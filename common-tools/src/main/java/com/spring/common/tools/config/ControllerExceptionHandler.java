@@ -15,37 +15,10 @@ import org.springframework.web.server.MethodNotAllowedException;
 @RestControllerAdvice
 public class ControllerExceptionHandler {
 
-  @ExceptionHandler(value = {NullPointerException.class})
-  public ResponseEntity<RestResponse<Object>> nullPointerException (NullPointerException e, WebRequest request) {
-    return new ResponseEntity<>(this.armarRespuesta(HttpStatus.BAD_REQUEST.value(), e.getMessage()),
-            HttpStatus.BAD_REQUEST);
-  }
-
-  @ExceptionHandler(value = {MethodArgumentNotValidException.class})
-  public ResponseEntity<RestResponse<Object>> argumentNotValidException (MethodArgumentNotValidException e,
-          WebRequest request) {
-    return new ResponseEntity<>(this.armarRespuesta(HttpStatus.BAD_REQUEST.value(), e.getMessage()),
-            HttpStatus.BAD_REQUEST);
-  }
-
-  @ExceptionHandler(value = {HttpMessageNotReadableException.class})
-  public ResponseEntity<RestResponse<Object>> notReadableException (HttpMessageNotReadableException e,
-          WebRequest request) {
-    return new ResponseEntity<>(this.armarRespuesta(HttpStatus.BAD_REQUEST.value(), e.getMessage()),
-            HttpStatus.BAD_REQUEST);
-  }
-
-  @ExceptionHandler(value = {HttpRequestMethodNotSupportedException.class})
-  public ResponseEntity<RestResponse<Object>> methodNotSupportedException (HttpRequestMethodNotSupportedException e,
-          WebRequest request) {
-    return new ResponseEntity<>(this.armarRespuesta(HttpStatus.METHOD_NOT_ALLOWED.value(), e.getMessage()),
-            HttpStatus.METHOD_NOT_ALLOWED);
-  }
-
   @ExceptionHandler(value = {Exception.class})
   public ResponseEntity<RestResponse<Object>> myOwnException (Exception e, WebRequest request) {
-    return new ResponseEntity<>(this.armarRespuesta(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()),
-            HttpStatus.INTERNAL_SERVER_ERROR);
+    return new ResponseEntity<>(this.armarRespuesta(HttpStatus.BAD_REQUEST.value(), e.getMessage()),
+            HttpStatus.BAD_REQUEST);
   }
 
   public RestResponse<Object> armarRespuesta (int code, String message) {
