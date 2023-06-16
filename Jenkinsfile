@@ -88,7 +88,7 @@ pipeline {
                             [
                                 artifactId: pom_common.artifactId,
                                 classifier: '',
-                                file: './common-tools/target/' + pom_common.artifactId + '-' + pom_parent.version + '.jar',
+                                file: './common-tools/target/' + pom_common.artifactId + '.jar',
                                 type: 'jar'
                             ]
                         ]
